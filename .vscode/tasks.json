@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "tsc-watch",
+            "type": "shell",
+            "command": "${workspaceFolder}/node_modules/.bin/tsc",
+            "args": [
+                "-w",
+                "-p",
+                "."
+            ],
+            "isBackground": true,
+            "problemMatcher": [
+                "$tsc-watch"
+            ]
+        },
+        {
+            "label": "tsc-watch-stop",
+            "type": "shell",
+            "command": "pkill",
+            "args": [
+                "-f",
+                "tsc -w -p ."
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
