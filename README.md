@@ -1,71 +1,70 @@
-# apply-clipboard-patch README
+# Clipboard Patch VSCode Extension
 
-This is the README for your extension "apply-clipboard-patch". After writing up a brief description, we recommend including the following sections.
+## Overview
+
+This VSCode extension allows you to apply patches from the clipboard directly to your workspace files. It supports both staging and committing the changes with Git integration, making it convenient to quickly apply updates and manage your codebase.
 
 ## Features
+- **Apply Clipboard Patch and Commit**: Reads the patch content from the clipboard, applies the changes to the specified file, stages the changes, and creates a Git commit.
+- **Apply Clipboard Patch and Stage**: Similar to the above command, but only stages the changes without committing.
+- **Supports Diff Patches**: Can apply diff-style patches that include line modifications, additions, or deletions.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Commands
 
-For example if there is an image subfolder under your extension project workspace:
+- `Apply Clipboard Patch and Commit`: Apply the patch from the clipboard and commit the changes.
+- `Apply Clipboard Patch and Stage`: Apply the patch from the clipboard and stage the changes for a future commit.
 
-\!\[feature X\]\(images/feature-x.png\)
+## How It Works
+The extension reads from the system clipboard, looking for metadata in the following format:
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+```plaintext
+//# { "filePath": "path/to/file", "type": "diff" }
+<patch or code content here>
+```
+
+- **filePath**: The relative path to the file where the changes should be applied.
+- **type**: Indicates if the patch is a "diff". If not provided, the content is treated as a full file replacement.
+
+## Installation
+1. Clone this repository.
+2. Run `npm install` to install dependencies.
+3. Run `npm run build` to compile the TypeScript code.
+4. Open this folder in VSCode.
+5. Press `F5` to start a new VSCode instance with the extension enabled.
+
+## Usage
+1. Copy patch content to the clipboard in the expected format.
+2. Use the command palette (`Cmd/Ctrl + Shift + P`) to select one of the extension commands:
+   - `Apply Clipboard Patch and Commit`
+   - `Apply Clipboard Patch and Stage`
+3. The extension will automatically parse the metadata and apply the patch accordingly.
+
+## Error Handling
+- If the clipboard does not contain valid metadata, an error will be shown to explain the expected format.
+- Errors encountered during directory creation, file access, or Git commands are logged to both the VSCode error message and the console for debugging.
 
 ## Requirements
+- Git must be installed and accessible from your terminal.
+- Node.js environment to build the extension.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+## Development
+### Structure
+- `src/extension.ts`: The main file containing all logic for clipboard handling, Git integration, and file updates.
+- `handleErrorMessage()`: A utility function to log and show error messages.
+- `retryClipboardRead()`: Implements retry logic to read from the clipboard in case of temporary failures.
 
-## Extension Settings
+### Running the Extension in Development Mode
+1. Open the folder in VSCode.
+2. Press `F5` to launch an Extension Development Host.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+### Building the Project
+```bash
+npm run build
+```
 
-For example:
+## Contribution
+Feel free to submit issues or pull requests. Contributions are always welcome to make this extension better!
 
-This extension contributes the following settings:
+## License
+This project is licensed under the MIT License.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
